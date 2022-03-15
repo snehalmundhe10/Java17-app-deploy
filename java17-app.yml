@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java17-deployment
+  labels: 
+    app: java17-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: java17-pod-label
+  progressDeadlineSeconds: 420    
+  minReadySeconds: 30
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1    
+  template:
+    metadata:
+      name: java17-pods
+      labels:
+        app: java17-pod-label
+    spec:
+      containers:
+        - name: java17-app-container
+          image: snehal22/java17-app:300
+          imagePullPolicy: Always         
